@@ -16,6 +16,17 @@ function normalizeLetters(letters) {
   return JSON.stringify(entries)
 }
 
+function hashStringToInt(input) {
+  if (!input) return 0
+  let hash = 0
+  for (let i = 0; i < input.length; i++) {
+    hash = (hash << 5) - hash + input.charCodeAt(i)
+    hash |= 0 // Convert to 32bit int
+  }
+  // Asegurar número positivo
+  return Math.abs(hash)
+}
+
 // Generar letras del día (2 vocales + 3 consonantes)
 export function generateDailyLetters() {
   const vocales = ['A', 'E', 'I', 'O', 'U']
@@ -23,7 +34,11 @@ export function generateDailyLetters() {
   
   // Usar la fecha como seed para generar letras consistentes por día
   const today = new Date().toDateString()
-  const seed = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+  const baseSeed = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+  // Incorporar sal de entorno si existe (VITE_SEED_SALT)
+  const seedSalt = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SEED_SALT) ? String(import.meta.env.VITE_SEED_SALT) : ''
+  const saltInt = hashStringToInt(seedSalt)
+  const seed = baseSeed + saltInt
   
   // Generar 2 vocales aleatorias
   const selectedVocales = []
