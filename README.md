@@ -10,6 +10,8 @@ Un juego diario de palabras en español donde debes encontrar todas las combinac
 - **Puntuación inteligente**: Sistema de puntuación basado en la longitud de las palabras
 - **Persistencia local**: Guarda tu progreso diario automáticamente
 - **Interfaz moderna**: Diseño responsive con animaciones y efectos visuales
+- **Compartir resultado**: Comparte tu partida con Web Share API o copia al portapapeles
+- **Modal de victoria a pantalla completa**: Con scroll interno y bloqueo del fondo
 
 ## 🚀 Cómo jugar
 
@@ -29,14 +31,21 @@ Un juego diario de palabras en español donde debes encontrar todas las combinac
 ### Sistema de comodines
 - **Consonantes extra**: 2 disponibles por día
 - **Vocales extra**: 1 disponible por día
-- Usar comodines reduce la puntuación en un 30%
+- Cada uso de comodín resta 50 puntos
+- Tras usar comodines, las palabras que encuentres a partir de ese momento puntúan un 85% de su valor base
 
 ### Puntuación
 - **Base**: 10 puntos por letra
 - **Bonus por palabras largas**: 
   - 8+ letras: +50 puntos
   - 10+ letras: +100 puntos
-- **Penalización por comodines**: -30%
+- **Penalizaciones y bonus adicionales**:
+  - Tras usar comodines: multiplicador 0.85 a las palabras posteriores
+  - Por cada comodín usado: −50 puntos inmediatos
+  - Completar todas las palabras del día: +200 puntos
+
+### Compartir resultado
+- Desde la modal de victoria puedes compartir tu resultado. Se usa Web Share API cuando está disponible; si no, se copia un resumen al portapapeles.
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -116,6 +125,31 @@ wordgame/
 - Ajusta el diccionario en `src/utils/gameLogic.js`
 - Modifica la lógica de puntuación según tus preferencias
 - Personaliza las animaciones en `tailwind.config.js`
+
+### Variables de entorno
+- `VITE_SEED_SALT`: sal opcional para influir en la seed diaria de letras (útil en producción para controlar las combinaciones). Ejemplos:
+  - Archivo `.env.production`:
+    ```
+    VITE_SEED_SALT=mi_sal_unica
+    ```
+  - Build con sal temporal:
+    ```bash
+    VITE_SEED_SALT=mi_sal_unica npm run build
+    ```
+- `HIDE_DEBUG`: si está definida a `1` o `true`, no se expone el objeto global de depuración.
+  - Desarrollo:
+    ```bash
+    HIDE_DEBUG=1 npm run dev
+    ```
+  - Producción (en `.env.production`):
+    ```
+    HIDE_DEBUG=1
+    ```
+
+### Depuración
+- Objeto global disponible en desarrollo: `window.debug`.
+  - Método: `window.debug.getRemainingWords()` devuelve las palabras posibles que aún no has encontrado.
+  - Para ocultarlo en cualquier entorno, usa `HIDE_DEBUG=1`.
 
 ## 📱 Responsive Design
 
