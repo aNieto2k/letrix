@@ -1,4 +1,4 @@
-# 🎯 Juego de Palabras en Español
+# Letrix
 
 Un juego diario de palabras en español donde debes encontrar todas las combinaciones posibles usando las letras del día.
 
@@ -159,4 +159,3 @@ Si tienes preguntas o sugerencias, no dudes en contactar.
 ---
 
 **¡Disfruta jugando y mejorando tu vocabulario en español! 🎯✨**
-# letrix
