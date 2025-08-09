@@ -90,6 +90,9 @@
         </div>
       </div>
     </footer>
+    
+    <!-- Install Prompt (móviles) -->
+    <InstallPrompt />
   </div>
 </template>
 
@@ -102,6 +105,7 @@ import { saveGameState, loadGameState, saveScoreHistory, getScoreStats } from '.
 import ProgressPanel from './components/ProgressPanel.vue'
 import ProgressBar from './components/ProgressBar.vue'
 import HelpModal from './components/HelpModal.vue'
+import InstallPrompt from './components/InstallPrompt.vue'
 
 export default {
   name: 'App',
@@ -111,6 +115,7 @@ export default {
     ProgressPanel,
     ProgressBar,
     HelpModal
+    , InstallPrompt
   },
   setup() {
     // Game State

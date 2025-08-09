@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './style.css'
+import { registerSW } from 'virtual:pwa-register'
 
 const app = createApp(App)
 const vm = app.mount('#app')
@@ -15,4 +16,9 @@ if (typeof __HIDE_DEBUG__ === 'undefined' || __HIDE_DEBUG__ === false) {
       return all.filter((word) => !found.includes(word))
     }
   }
+}
+
+// Registrar Service Worker para PWA
+if (typeof window !== 'undefined') {
+  registerSW({ immediate: true })
 }
